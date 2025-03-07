@@ -28,9 +28,10 @@ Get-ChildItem -Exclude .git, .github, .gitignore -Recurse | Remove-Item -Recurse
 
 # rama principal
 git branch
-flutter build web
+flutter build web --base-href="/prototipe_doctor_app/"
 Remove-Item docs -Recurse -Force
 xcopy .\build\web .\docs /E /H /C /I
 git add docs
 git commit -m "Add web build to docs"
 git push origin main
+https://kevinmoh2o.github.io/prototipe_doctor_app/

@@ -1,4 +1,5 @@
 import 'package:doctor_app/features/auth/presentation/provider/login_provider.dart';
+import 'package:doctor_app/features/create_account/presentation/screen/main_form_create_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,7 +20,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 32),
-                  // LOGO O ICONO (placeholder)
+                  // LOGO
                   Container(
                     width: 80,
                     height: 80,
@@ -68,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Campo Email
+                        // Email
                         const Text(
                           'Email:',
                           style: TextStyle(
@@ -96,7 +97,7 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
 
-                        // Campo Contraseña con icono de visibilidad
+                        // Contraseña
                         const Text(
                           'Contraseña:',
                           style: TextStyle(
@@ -137,10 +138,8 @@ class LoginScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Checkbox(
-                                  value: false,
-                                  onChanged: (value) {
-                                    // TODO: Manejar "Recordar"
-                                  },
+                                  value: loginProv.rememberMe,
+                                  onChanged: (val) => loginProv.toggleRememberMe(val),
                                 ),
                                 const Text('Recordar'),
                               ],
@@ -163,26 +162,22 @@ class LoginScreen extends StatelessWidget {
                                 ? null
                                 : () async {
                                     await loginProv.login();
-                                    // TODO: Manejar navegación tras login exitoso
-                                    // Navigator.pushReplacementNamed(context, '/home');
+                                    // TODO: Navegación tras login exitoso
                                   },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4F47C2),
+                              foregroundColor: Colors.white, // Texto blanco
+                              textStyle: const TextStyle(fontSize: 16),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 16,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 16),
                             ),
                             child: loginProv.isLoading
                                 ? const CircularProgressIndicator(
                                     color: Colors.white,
                                   )
-                                : const Text(
-                                    'INGRESAR',
-                                    style: TextStyle(fontSize: 16),
-                                  ),
+                                : const Text('INGRESAR'),
                           ),
                         ),
                         const SizedBox(height: 16),
@@ -220,12 +215,16 @@ class LoginScreen extends StatelessWidget {
                         Center(
                           child: GestureDetector(
                             onTap: () {
-                              // TODO: Navegar a registro
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) => const MainFormCreateScreen()),
+                              );
                             },
-                            child: const Text(
+                            child: Text(
                               '¿No tienes cuenta? Crea una nueva cuenta',
                               style: TextStyle(
-                                color: Colors.blue,
+                                color: Colors.blue.shade700,
+                                fontWeight: FontWeight.w500,
                                 decoration: TextDecoration.underline,
                               ),
                             ),

@@ -1,35 +1,66 @@
+import 'package:doctor_app/core/data/services/credential_service.dart';
 import 'package:flutter/material.dart';
 
 class LoginProvider extends ChangeNotifier {
-  // Controladores para email y password
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // Para mostrar/ocultar la contraseña
   bool _isPasswordVisible = false;
   bool get isPasswordVisible => _isPasswordVisible;
 
-  // Para mostrar un indicador de carga mientras se procesa el login
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
-  // Cambia la visibilidad de la contraseña
+  bool _rememberMe = false;
+  bool get rememberMe => _rememberMe;
+
+  final credentialService = CredentialService();
+
+  LoginProvider() {
+    // Al iniciar, puedes intentar recuperar credenciales si deseas
+    _loadStoredCredentials();
+  }
+
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     notifyListeners();
   }
 
-  // Ejemplo de acción de login (puedes llamar a tu repositorio o caso de uso aquí)
+  void toggleRememberMe(bool? value) {
+    _rememberMe = value ?? false;
+    notifyListeners();
+  }
+
   Future<void> login() async {
     _isLoading = true;
     notifyListeners();
 
-    // Simulación de llamada a un backend
     await Future.delayed(const Duration(seconds: 2));
 
-    // Aquí manejarías la respuesta real (éxito o error)
+    // Simulación: validación exitosa
+    if (_rememberMe) {
+      await credentialService.storeCredentials(
+        emailController.text,
+        passwordController.text,
+      );
+    } else {
+      // Si no se desea recordar, limpiamos
+      await credentialService.clearCredentials();
+    }
+
     _isLoading = false;
     notifyListeners();
+  }
+
+  // Cargar credenciales (opcional, por si deseas autocompletar)
+  Future<void> _loadStoredCredentials() async {
+    final creds = await credentialService.getCredentials();
+    if (creds != null) {
+      emailController.text = creds['email'] ?? '';
+      passwordController.text = creds['password'] ?? '';
+      _rememberMe = true; // Asumes que si hay credenciales, se "recordaron"
+      notifyListeners();
+    }
   }
 
   @override
