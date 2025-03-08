@@ -1,0 +1,28 @@
+<svg version="1.1" id="onco360" width="512" height="512" viewBox="0 0 512 512"
+     xmlns="http://www.w3.org/2000/svg">
+  <title>Onco 360 Médicos</title>
+  <!-- Fondo blanco (opcional) -->
+  <rect width="512" height="512" fill="#ffffff"/>
+  
+  <!-- Cinta oncológica (color principal) -->
+  <path d="M256,80 C200,80 160,160 256,240 C352,160 312,80 256,80 Z" fill="#6A66D8"/>
+  
+  <!-- Escudo (color secundario) -->
+  <path d="M256,170 L296,210 L296,270 Q256,310 216,270 L216,210 Z" fill="#4C49A9"/>
+  
+  <!-- Signo médico (cruz) dentro del escudo -->
+  <rect x="248" y="200" width="16" height="40" fill="#FFFFFF"/>
+  <rect x="238" y="210" width="36" height="16" fill="#FFFFFF"/>
+  
+  <!-- Texto: Onco 360 -->
+  <text x="50%" y="370" text-anchor="middle" font-size="56" fill="#6A66D8"
+        font-family="Arial" font-weight="bold">
+    Onco 360
+  </text>
+  
+  <!-- Texto: Médicos -->
+  <text x="50%" y="420" text-anchor="middle" font-size="32" fill="#4C49A9"
+        font-family="Arial">
+    Médicos
+  </text>
+</svg>
