@@ -1,6 +1,8 @@
 import 'package:doctor_app/features/auth/presentation/provider/login_provider.dart';
 import 'package:doctor_app/features/create_account/presentation/screen/main_form_create_screen.dart';
+import 'package:doctor_app/features/home/presentation/screen/dashboard_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -21,7 +23,12 @@ class LoginScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 32),
                   // LOGO
-                  Container(
+                  Image.asset(
+                    "assets/images/logo_blanco.png",
+                    scale: 3.5,
+                  ),
+
+                  /* Container(
                     width: 80,
                     height: 80,
                     decoration: const BoxDecoration(
@@ -33,17 +40,13 @@ class LoginScreen extends StatelessWidget {
                       size: 50,
                       color: Colors.grey,
                     ),
-                  ),
+                  ), 
                   const SizedBox(height: 16),
-
+*/
                   // Título
-                  const Text(
-                    'Onco 360',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                  Text(
+                    'MEDICOS',
+                    style: GoogleFonts.emblemaOne(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 3),
                   ),
                   const SizedBox(height: 8),
 
@@ -163,6 +166,11 @@ class LoginScreen extends StatelessWidget {
                                 : () async {
                                     await loginProv.login();
                                     // TODO: Navegación tras login exitoso
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (_) => const DashboardScreen()),
+                                    );
                                   },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF4F47C2),

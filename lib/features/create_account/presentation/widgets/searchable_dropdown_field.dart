@@ -19,10 +19,6 @@ class SearchableDropdownField extends StatefulWidget {
 }
 
 class _SearchableDropdownFieldState extends State<SearchableDropdownField> {
-  // Este controller es para el campo principal (readOnly)
-  // El que escribe el usuario es el searchController dentro del diálogo.
-  // Por eso _searchController no necesita ser guardado en la clase entera.
-
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -31,6 +27,10 @@ class _SearchableDropdownFieldState extends State<SearchableDropdownField> {
       decoration: InputDecoration(
         labelText: widget.label,
         suffixIcon: const Icon(Icons.arrow_drop_down),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
       ),
       validator: widget.validator,
       onTap: _openSearchDialog,
@@ -41,13 +41,15 @@ class _SearchableDropdownFieldState extends State<SearchableDropdownField> {
     final selectedValue = await showDialog<String>(
       context: context,
       builder: (BuildContext context) {
-        // Declaramos variables locales al diálogo
         List<String> filteredItems = List.from(widget.items);
         final searchController = TextEditingController();
 
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setStateDialog) {
             return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
               title: Text('Seleccionar ${widget.label}'),
               content: SizedBox(
                 width: double.maxFinite,
@@ -58,9 +60,9 @@ class _SearchableDropdownFieldState extends State<SearchableDropdownField> {
                       controller: searchController,
                       decoration: const InputDecoration(
                         labelText: 'Buscar...',
+                        border: OutlineInputBorder(),
                       ),
                       onChanged: (value) {
-                        // Usamos setStateDialog para rebuild dentro del AlertDialog
                         setStateDialog(() {
                           filteredItems = widget.items.where((item) => item.toLowerCase().contains(value.toLowerCase())).toList();
                         });
@@ -68,7 +70,7 @@ class _SearchableDropdownFieldState extends State<SearchableDropdownField> {
                     ),
                     const SizedBox(height: 8),
                     SizedBox(
-                      height: 200, // Altura fija para evitar conflictos de layout
+                      height: 200,
                       child: ListView.builder(
                         itemCount: filteredItems.length,
                         itemBuilder: (context, index) {
